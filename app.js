@@ -12,6 +12,7 @@ import {
 
 app.use(express.json());
 
+// ticket 3
 app.get("/", function (req, res) {
 	res.send("Welcome to the inspirational quotes API");
 });
@@ -21,19 +22,31 @@ app.get("/quotes", async function (req, res) {
 	res.json(quotes);
 });
 
+//ticket 4
 app.get("/quotes/:id", async function (req, res) {
-	// get the id from params
 	const id = req.params.id;
-	// used id in function call and save variable
+
 	const quote = await getQuoteByID(id);
-	// if x is null - respond with error message
+
 	if (quote === null) {
 		res.status(404).json({ error: "quote not found" });
-	}
-	// else response with quote
-	else {
+	} else {
 		res.json(quote);
 	}
+	// get the id from params
+	// used id in function call and save variable
+	// if quote is null - respond with error message
+	// else response with quote
+});
+
+// Ticket 5.
+app.post("/quotes", async function (req, res) {
+	// save body json data
+	const reqQuote = req.body;
+	// run post function
+	const newQuote = await addQuote(reqQuote.quoteText, reqQuote.author);
+	// respond with new quote
+	res.json({ success: true, payload: newQuote });
 });
 
 app.listen(PORT, function () {
