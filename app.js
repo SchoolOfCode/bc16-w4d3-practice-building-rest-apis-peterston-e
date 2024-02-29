@@ -60,6 +60,15 @@ app.patch("/quotes/:id", async function (req, res) {
 	res.json({ success: true, payload: editedQuote });
 });
 
+app.delete("/quotes/:id", async function (req, res) {
+	// save req id
+	const id = req.params.id;
+	// call delete function pass in id and save return value in variable
+	const deletedQuote = await deleteQuote(id);
+	// respond with deleted object returned from function
+	res.json({ success: true, payload: deletedQuote });
+});
+
 app.listen(PORT, function () {
 	console.log(`Server is now listening on http://localhost:${PORT}`);
 });
