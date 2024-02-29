@@ -49,6 +49,17 @@ app.post("/quotes", async function (req, res) {
 	res.json({ success: true, payload: newQuote });
 });
 
+app.patch("/quotes/:id", async function (req, res) {
+	const reqBody = req.body;
+	const id = req.params.id;
+	// destructure body. see week 4 day 1: Destructuring
+	const { quoteText, author } = reqBody;
+	// call editQuote with the right info some of which may be null - see quotes.js
+	const editedQuote = await editQuote(id, quoteText, author);
+	// respond
+	res.json({ success: true, payload: editedQuote });
+});
+
 app.listen(PORT, function () {
 	console.log(`Server is now listening on http://localhost:${PORT}`);
 });
